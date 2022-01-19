@@ -3,9 +3,12 @@
 
 MODULE_LICENSE("GPL");
 
+int ex05_simple_module_function(void);
+
 int ex_module_init(void)
 {
     printk(KERN_ALERT "INSIDE %s function\n", __FUNCTION__);
+    ex05_simple_module_function();
     return 0;
 }
 
