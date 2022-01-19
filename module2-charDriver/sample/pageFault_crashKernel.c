@@ -8,7 +8,8 @@ __init void function1(void)
     printk(KERN_INFO "INSIDE %s function\n", __FUNCTION__);
 }
 
-void function2(void)
+// since this is called in module_exit but __init cleans it from RAM so page fault so kernel crash
+__init void function2(void)
 {
     printk(KERN_INFO "INSIDE %s function\n", __FUNCTION__);
 }
