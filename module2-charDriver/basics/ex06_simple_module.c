@@ -6,6 +6,7 @@ MODULE_LICENSE("GPL");
 
 int count = 1;
 // count value added to file -> /sys/module/ex06_simple_module/parameters/count
+// provided module_param permission is set to 0644 or something and not 0)
 module_param(count, int, 0);
 
 int ex_module_init(void)
