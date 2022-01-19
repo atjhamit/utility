@@ -11,6 +11,8 @@ obj-m := pageFault_crashKernel.o
 obj-m := ex05a_exporting_symbols.o
 obj-m += ex05b_using_symbols.o
 
+obj-m := ex06_simple_module.o
+
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
 clean:
