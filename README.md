@@ -1,2 +1,2 @@
 # kernel
-kernel device driver programming
+Familiarizing myself with kernel device driver programming
