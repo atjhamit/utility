@@ -1,0 +1,34 @@
+
+$ cat test.sh
+#!/bin/sh
+while [ 1 ]; do
+    echo "hello world"
+    sleep 60
+done
+
+# create a memory controller
+$ sudo mkdir /sys/fs/cgroup/memory/foo
+
+# limit the memory
+$ echo 50000000 | sudo tee /sys/fs/cgroup/memory/foo/memory.limit_in_bytes
+50000000
+
+# rounded off based on page size
+$ sudo cat /sys/fs/cgroup/memory/foo/memory.limit_in_bytes
+49999872
+
+# run the program and get the process id as that is very important
+$ sh ./test.sh &
+  [1] 31344
+  hello world
+
+# PID -> process id of the test.sh program in execution
+$ echo PID | sudo tee /sys/fs/cgroup/memory/foo/cgroup.procs
+PID
+
+$ ps -o cgroup PID
+CGROUP
+0::/memory/foo
+
+$ sudo cat /sys/fs/cgroup/memory/foo/memory.usage_in_bytes
+262144

@@ -1,0 +1,29 @@
+Install
+    sudo apt-get install cgroup-tools
+
+-> Fist, we will create a couple of cgroups and run some applications to see their CPU assignments.
+    - by default, they should get equal CPU %
+    $ sudo cgcreate -g cpu:A
+    $ sudo cgcreate -g cpu:B
+
+-> List the current cpu.shares value (should be 1024)
+    $ cgget -r cpu.shares A
+    A:
+    cpu.shares: 1024
+
+    $ cgget -r cpu.shares B
+    B:
+    cpu.shares: 1024
+
+-> Next, create two processes and assign one to each group
+    sudo cgexec -g cpu:A dd if=/dev/zero of=/dev/null &
+    sudo cgexec -g cpu:B dd if=/dev/zero of=/dev/null &
+
+    They should get an equal CPU time. Use top to check
+
+-> Next, change the CPU values and check again:
+    $ sudo cgset -r cpu.shares=768 A
+    $ sudo cgset -r cpu.shares=256 B
+
+    A should get 3/4th and B should get 1/4th CPU time.
+    A -> 75% and B -> 25%
